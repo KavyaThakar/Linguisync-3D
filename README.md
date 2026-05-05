@@ -82,43 +82,66 @@ flowchart TD
 | **Temporal Smoothing** | Reduces flickering and ensures frame-to-frame consistency |
 
 
-🛠️ Tech Stack
-Component,Technology Used
-Audio Feature Extraction,Wav2Vec 2.0
-3D Facial Landmarks,MediaPipe Face Mesh
-Lip Sync Generation,Wav2Lip (GAN)
-Joint Embedding,Custom PyTorch NN
-Framework,PyTorch + OpenCV
-Environment,Google Colab
+## 🛠️ Tech Stack
 
-📁 Project Structure
+| Tech Stack Component | Technology Used |
+|----------------------|-----------------|
+| 🔊 Audio Feature Extraction | Wav2Vec 2.0 |
+| 🧊 3D Facial Landmarks | MediaPipe Face Mesh |
+| 👄 Lip Sync Generation | Wav2Lip (GAN) |
+| 🔗 Joint Embedding | Custom PyTorch NN |
+| 🧠 Framework | PyTorch + OpenCV |
+| ☁️ Environment | Google Colab |
+
+---
+
+## 📁 Project Structure
+
+```
 Linguisync-3D/
-├── data/                          # GRID Dataset videos
-├── results/                       # Dubbed videos + models
-│   ├── hindi_high_energy_final.mp4
-│   ├── long_paragraph_dubbed.mp4
-│   └── improved_joint_embedder.pth
-├── notebooks/                     # Main Colab Notebooks
-└── README.md
+│
+├── 📂 data/
+│   └── GRID Dataset videos
+│
+├── 📂 results/
+│   ├── 🎬 hindi_high_energy_final.mp4     # Hindi dubbing output
+│   ├── 🎬 long_paragraph_dubbed.mp4       # Long-form dubbing output
+│   └── 🧠 improved_joint_embedder.pth     # Trained model weights
+│
+├── 📓 notebooks/
+│   └── Main Colab Notebooks
+│
+└── 📄 README.md
+```
 
-🚀 How It Works
+## 🚀 How It Works
 
-Input — Source video + New target audio
-Audio Processing — Extract features using Wav2Vec 2.0
-3D Geometry — Extract 478 3D landmarks using MediaPipe
-Cross-Modal Alignment — Train using Joint Sync Loss (Core Novelty)
-Lip Generation — Wav2Lip generates new mouth movements
-Smoothing — Apply temporal smoothing
-Output — Natural dubbed video
+| Step | Stage | Description |
+|------|-------|-------------|
+| 1️⃣ | **Input** | Source video + New target audio |
+| 2️⃣ | **Audio Processing** | Extract features using Wav2Vec 2.0 |
+| 3️⃣ | **3D Geometry** | Extract 478 3D landmarks using MediaPipe |
+| 4️⃣ | **Cross-Modal Alignment** | Train using Joint Sync Loss ⚡ *Core Novelty* |
+| 5️⃣ | **Lip Generation** | Wav2Lip generates new mouth movements |
+| 6️⃣ | **Smoothing** | Apply temporal smoothing |
+| 7️⃣ | **Output** | Natural dubbed video 🎬 |
 
-📊 Results & Achievements
-Successfully dubbed English and Hindi speeches
-Joint Sync Loss achieved: 0.0152 (after training)
-Working with long paragraphs and energetic motivational speech
-3D-aware dubbing pipeline completed
-Fully offline implementation
+## 🏆 Results & Achievements
 
-👨‍💻 Author
-Kavya Thakar
-Department of Information and Communication Technology
-Marwadi University, Rajkot
+| Achievement | Details |
+|-------------|---------|
+| ✅ Language Support | Successfully dubbed English and Hindi speeches |
+| 📉 Joint Sync Loss | Achieved **0.0152** (after training) |
+| 📝 Long-form Support | Works with long paragraphs and energetic motivational speech |
+| 🧊 3D-Aware Pipeline | 3D-aware dubbing pipeline completed |
+| 🔌 Offline Ready | Fully offline implementation |
+
+---
+
+## 👩‍💻 Author
+
+| | |
+|--|--|
+| **Name** | Kavya Thakar |
+| **Department** | Information and Communication Technology |
+| **University** | Marwadi University, Rajkot |
