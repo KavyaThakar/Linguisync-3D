@@ -16,6 +16,15 @@ The system can take any video and new audio (English, Hindi, etc.) and generate 
 
 ---
 
+### Prerequisites
+
+```bash
+pip install torch torchvision torchaudio
+pip install transformers
+pip install mediapipe
+pip install opencv-python
+```
+
 ## ✨ Key Features
 
 - 3D Facial Landmark Extraction (MediaPipe)
@@ -48,10 +57,10 @@ This loss enforces **cross-modal temporal consistency** — ensuring that the so
 ```mermaid
 flowchart TD
     A[Input Video + Target Audio] --> B[Wav2Vec 2.0]
-    A --> C[MediaPipe Face Mesh]
+    A --> C[MediaPipe 3D Landmarks]
     B --> D[Audio Features]
-    C --> E[3D Landmarks]
-    D & E --> F[Joint Audio-Visual Embedder]
+    C --> E[3D Facial Landmarks]
+    D & E --> F[Joint Embedder]
     F --> G[Joint Sync Loss]
     A --> H[Wav2Lip Generator]
     H --> I[Temporal Smoothing]
@@ -59,6 +68,18 @@ flowchart TD
 
     style F fill:#4285F4,stroke:#fff,color:#fff
     style G fill:#EA4335,stroke:#fff,color:#fff
+```
+
+## 🔍 Component Overview
+
+| Component | Description |
+|-----------|-------------|
+| **Wav2Vec 2.0** | Extracts deep audio features from the target audio |
+| **MediaPipe 3D Landmarks** | Detects and tracks 3D facial landmarks from input video |
+| **Joint Embedder** | Fuses audio and visual features into a shared embedding space |
+| **Joint Sync Loss** | Computes audio-visual synchronization loss during training |
+| **Wav2Lip Generator** | Generates lip-synced frames based on target audio |
+| **Temporal Smoothing** | Reduces flickering and ensures frame-to-frame consistency |
 
 
 🛠️ Tech Stack
