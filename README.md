@@ -1,112 +1,92 @@
 # Linguisync-3D: Neural Lip & Facial Dubbing
 
-**Cross-Modal 3D-Aware Neural Dubbing System using Joint Audio-Visual Embedding**
+**Cross-Modal 3D-Aware Neural Facial Dubbing using Joint Audio-Visual Embedding**
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-4285F4?style=for-the-badge&logo=google&logoColor=white)
 
 ---
 
 ## 🎯 Project Overview
 
-**Linguisync-3D** is a deep learning-based neural facial dubbing system that can dub videos into different languages while maintaining natural lip movements and facial expressions. 
+**Linguisync-3D** is a deep learning system designed for high-quality **neural facial dubbing** across languages. It overcomes the limitations of traditional 2D lip-sync methods by incorporating **3D facial geometry** and a novel **Joint Audio-Visual Embedding Loss**.
 
-Unlike traditional 2D pixel-warping methods, this project focuses on **3D facial geometry awareness** and **cross-modal temporal consistency** using a custom Joint Audio-Visual Embedding Loss.
+The system can take any video and new audio (English, Hindi, etc.) and generate natural-looking lip movements while preserving the person's identity.
 
 ---
 
 ## ✨ Key Features
 
-- **3D Facial Awareness**: Extracts 478 3D landmarks using MediaPipe
-- **Rich Audio Understanding**: Uses Wav2Vec 2.0 for phoneme-level features
-- **Novel Joint Sync Loss**: Aligns audio and 3D visual embeddings frame-by-frame
-- **Base Generator**: Wav2Lip for high-quality lip synthesis
-- **Temporal Smoothing**: Reduces jitter between frames
-- **Fully Offline**: No external APIs required
-- **Multilingual Support**: Tested with English & Hindi
+- 3D Facial Landmark Extraction (MediaPipe)
+- Rich Phoneme-level Audio Features (Wav2Vec 2.0)
+- **Core Novelty**: Joint Audio-Visual Embedding Loss
+- Wav2Lip as base generator
+- Temporal smoothing for flicker-free output
+- Fully offline & reproducible
 
 ---
 
-## 🛠️ Tech Stack
+## 📊 Core Novelty - Joint Audio-Visual Embedding Loss
 
-| Component                | Technology                     |
-|-------------------------|--------------------------------|
-| Audio Feature Extraction| Wav2Vec 2.0 (Hugging Face)     |
-| 3D Landmarks            | MediaPipe Face Mesh            |
-| Lip Sync Generator      | Wav2Lip                        |
-| Joint Embedding         | Custom PyTorch NN              |
-| Framework               | PyTorch + OpenCV               |
-| Environment             | Google Colab (Free Tier)       |
+```math
+\Large
+\mathcal{L}_{sync} = \sum_{t=1}^{T} \left\| \text{Enc}_{\text{audio}}(a_t) - \text{Enc}_{\text{video}}(v_t) \right\|^2
 
----
+## 📌 System Architecture
 
-## 📁 Project Structure
-Linguisync3D/
-├── data/                      # GRID Dataset videos
-├── results/                   # Output videos & models
-├── src/                       # (Optional) Source code
-├── notebooks/                 # Colab notebooks
-├── improved_joint_embedder.pth # Trained model
+```mermaid
+flowchart TD
+    A[Input Video + Target Audio] --> B[Wav2Vec 2.0]
+    A --> C[MediaPipe Face Mesh]
+    B --> D[Audio Features\n(T × 768)]
+    C --> E[3D Landmarks\n(T × 478 × 3)]
+    D & E --> F[Joint Audio-Visual Embedder]
+    F --> G[Joint Sync Loss\nL_sync]
+    A --> H[Wav2Lip Generator]
+    H --> I[Temporal Smoothing]
+    I --> J[Final Dubbed Video]
+    
+    style F fill:#4285F4,stroke:#fff,color:#fff
+    style G fill:#EA4335,stroke:#fff,color:#fff
+
+🛠️ Tech Stack
+Component,Technology Used
+Audio Feature Extraction,Wav2Vec 2.0
+3D Facial Landmarks,MediaPipe Face Mesh
+Lip Sync Generation,Wav2Lip (GAN)
+Joint Embedding,Custom PyTorch NN
+Framework,PyTorch + OpenCV
+Environment,Google Colab
+
+📁 Project Structure
+Linguisync-3D/
+├── data/                          # GRID Dataset videos
+├── results/                       # Dubbed videos + models
+│   ├── hindi_high_energy_final.mp4
+│   ├── long_paragraph_dubbed.mp4
+│   └── improved_joint_embedder.pth
+├── notebooks/                     # Main Colab Notebooks
 └── README.md
 
+🚀 How It Works
 
----
+Input — Source video + New target audio
+Audio Processing — Extract features using Wav2Vec 2.0
+3D Geometry — Extract 478 3D landmarks using MediaPipe
+Cross-Modal Alignment — Train using Joint Sync Loss (Core Novelty)
+Lip Generation — Wav2Lip generates new mouth movements
+Smoothing — Apply temporal smoothing
+Output — Natural dubbed video
 
-## 🚀 How It Works (Pipeline)
-
-1. Input video + Target audio (any language)
-2. Extract 3D facial landmarks (MediaPipe)
-3. Extract audio features (Wav2Vec 2.0)
-4. Compute **Joint Audio-Visual Sync Loss** (Main Contribution)
-5. Generate lip movements using Wav2Lip
-6. Apply temporal smoothing
-7. Output: Natural dubbed video
-
-## Core Novelty
-
-### Joint Audio-Visual Embedding Loss
-
-The main contribution of **Linguisync-3D** is the following loss function that aligns audio features with 3D facial geometry:
-
-$$
-\mathcal{L}_{sync} = \sum_{t=1}^{T} \left\| \text{Enc}_{\text{audio}}(a_t) - \text{Enc}_{\text{video}}(v_t) \right\|^2
-$$
-
-Where:
-- $\text{Enc}_{\text{audio}}(a_t)$ = Audio embedding from **Wav2Vec 2.0** at time $t$
-- $\text{Enc}_{\text{video}}(v_t)$ = 3D facial landmarks embedding from **MediaPipe** at time $t$
-- $T$ = Total number of frames
-
-This loss enforces **cross-modal temporal consistency** — making sure the sound at any moment matches the correct mouth shape and facial structure.
-
----
-
-### Why This Matters
-- Traditional methods only do 2D pixel warping.
-- Our approach learns the relationship between **phonemes** (sound) and **visemes** (mouth shapes) using **3D geometry**.
-- This helps in multilingual dubbing (Hindi, English, etc.) where mouth movements differ significantly.
-
-  
-📊 Results
-Successfully dubbed multiple English & Hindi audios
+📊 Results & Achievements
+Successfully dubbed English and Hindi speeches
 Joint Sync Loss achieved: 0.0152 (after training)
-Working with long paragraphs and energetic speech
-Temporal smoothing applied for better visual quality
+Working with long paragraphs and energetic motivational speech
+3D-aware dubbing pipeline completed
+Fully offline implementation
 
-🔮 Future Work
-Full integration with FLAME 3DMM
-End-to-end fine-tuning of generator
-Real-time dubbing using MuseTalk
-Evaluation on LRS2 / MEAD datasets
-User study for MOS score
-
-👨‍💻 Team / Author
+👨‍💻 Author
 Kavya Thakar
 Department of Information and Communication Technology
 Marwadi University, Rajkot
-
-Made with ❤️ using PyTorch, MediaPipe & Wav2Lip
-
-How to Use
-Clone / Open in Colab
-Mount Google Drive
-Run the main pipeline notebook
-Put your video and audio in proper folders
-Run dubbing script
