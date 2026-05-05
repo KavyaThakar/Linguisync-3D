@@ -25,13 +25,23 @@ The system can take any video and new audio (English, Hindi, etc.) and generate 
 - Temporal smoothing for flicker-free output
 - Fully offline & reproducible
 
----
+  
+## Core Novelty - Joint Audio-Visual Embedding Loss
 
-## 📊 Core Novelty - Joint Audio-Visual Embedding Loss
+The main innovation of **Linguisync-3D** is the **Joint Audio-Visual Embedding Loss**, which aligns audio features with 3D facial geometry frame-by-frame.
 
-```math
-\Large
+$$
 \mathcal{L}_{sync} = \sum_{t=1}^{T} \left\| \text{Enc}_{\text{audio}}(a_t) - \text{Enc}_{\text{video}}(v_t) \right\|^2
+$$
+
+**Where:**
+- $\text{Enc}_{\text{audio}}(a_t)$ = Audio embedding from Wav2Vec 2.0 at time $t$
+- $\text{Enc}_{\text{video}}(v_t)$ = 3D facial landmarks embedding from MediaPipe at time $t$
+- $T$ = Total number of frames
+
+This loss enforces **cross-modal temporal consistency** — ensuring that the sound at any moment corresponds to the correct mouth and facial configuration.
+
+---
 
 ## 📌 System Architecture
 
@@ -46,9 +56,12 @@ flowchart TD
     A --> H[Wav2Lip Generator]
     H --> I[Temporal Smoothing]
     I --> J[Final Dubbed Video]
-    
+
     style F fill:#4285F4,stroke:#fff,color:#fff
     style G fill:#EA4335,stroke:#fff,color:#fff
+
+
+
 
 🛠️ Tech Stack
 Component,Technology Used
