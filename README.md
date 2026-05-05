@@ -59,11 +59,31 @@ Linguisync3D/
 6. Apply temporal smoothing
 7. Output: Natural dubbed video
 
-**Core Novelty**:
-```math
-<img width="434" height="86" alt="image" src="https://github.com/user-attachments/assets/d60325df-78ea-4783-b8c8-6d4f19e8bcac" />
+## Core Novelty
 
+### Joint Audio-Visual Embedding Loss
 
+The main contribution of **Linguisync-3D** is the following loss function that aligns audio features with 3D facial geometry:
+
+$$
+\mathcal{L}_{sync} = \sum_{t=1}^{T} \left\| \text{Enc}_{\text{audio}}(a_t) - \text{Enc}_{\text{video}}(v_t) \right\|^2
+$$
+
+Where:
+- $\text{Enc}_{\text{audio}}(a_t)$ = Audio embedding from **Wav2Vec 2.0** at time $t$
+- $\text{Enc}_{\text{video}}(v_t)$ = 3D facial landmarks embedding from **MediaPipe** at time $t$
+- $T$ = Total number of frames
+
+This loss enforces **cross-modal temporal consistency** — making sure the sound at any moment matches the correct mouth shape and facial structure.
+
+---
+
+### Why This Matters
+- Traditional methods only do 2D pixel warping.
+- Our approach learns the relationship between **phonemes** (sound) and **visemes** (mouth shapes) using **3D geometry**.
+- This helps in multilingual dubbing (Hindi, English, etc.) where mouth movements differ significantly.
+
+  
 📊 Results
 Successfully dubbed multiple English & Hindi audios
 Joint Sync Loss achieved: 0.0152 (after training)
