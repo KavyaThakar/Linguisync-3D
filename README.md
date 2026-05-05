@@ -61,7 +61,8 @@ Linguisync3D/
 
 **Core Novelty**:
 ```math
-\mathcal{L}_{sync} = \sum_{t=1}^{T} \| Enc_{audio}(a_t) - Enc_{video}(v_t) \|^2
+<img width="434" height="86" alt="image" src="https://github.com/user-attachments/assets/d60325df-78ea-4783-b8c8-6d4f19e8bcac" />
+
 
 📊 Results
 Successfully dubbed multiple English & Hindi audios
