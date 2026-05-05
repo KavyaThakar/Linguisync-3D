@@ -49,18 +49,16 @@ This loss enforces **cross-modal temporal consistency** — ensuring that the so
 flowchart TD
     A[Input Video + Target Audio] --> B[Wav2Vec 2.0]
     A --> C[MediaPipe Face Mesh]
-    B --> D[Audio Features\n(T × 768)]
-    C --> E[3D Landmarks\n(T × 478 × 3)]
+    B --> D[Audio Features]
+    C --> E[3D Landmarks]
     D & E --> F[Joint Audio-Visual Embedder]
-    F --> G[Joint Sync Loss\nL_sync]
+    F --> G[Joint Sync Loss]
     A --> H[Wav2Lip Generator]
     H --> I[Temporal Smoothing]
     I --> J[Final Dubbed Video]
 
     style F fill:#4285F4,stroke:#fff,color:#fff
     style G fill:#EA4335,stroke:#fff,color:#fff
-
-
 
 
 🛠️ Tech Stack
