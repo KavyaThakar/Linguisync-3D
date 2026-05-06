@@ -1,0 +1,8 @@
+Metric,Description,Linguisync-3D (Ours),Baseline (Wav2Lip)
+Lip Sync Error (LSE-C),Lower = better lip-audio sync (main metric),0.XX,Higher
+Lip Sync Error (LSE-D),Lower = better (distance variant),0.XX,Higher
+Fréchet Inception Distance (FID),Lower = better visual quality,Lower,Higher
+Learned Perceptual Image Patch Similarity (LPIPS),Lower = better perceptual quality,Lower,Higher
+Joint Sync Loss (Your Novelty),Your proposed loss (cross-modal consistency),0.0152,Higher
+Temporal Consistency (Flow Warping Error),Lower = less jitter between frames,Improved,Worse
+User Study (MOS - Mean Opinion Score),Human preference score (1-5),Higher,Lower
